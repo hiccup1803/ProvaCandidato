@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ICI.ProvaCandidato.Negocio",
+    "\\ICI.ProvaCandidato.Negocio\\obj",
+    "\\ICI.ProvaCandidato.Web",
+    "\\ICI.ProvaCandidato.Web\\Controllers",
+    "\\ICI.ProvaCandidato.Web\\Models",
+    "\\ICI.ProvaCandidato.Web\\obj",
+    "\\ICI.ProvaCandidato.Web\\Properties",
+    "\\ICI.ProvaCandidato.Web\\Views",
+    "\\ICI.ProvaCandidato.Web\\Views\\Home",
+    "\\ICI.ProvaCandidato.Web\\Views\\Shared"
+  ],
+  "SelectedNode": "\\ICI.ProvaCandidato.Web\\Controllers\\HomeController.cs",
+  "PreviewInSolutionExplorer": false
+}

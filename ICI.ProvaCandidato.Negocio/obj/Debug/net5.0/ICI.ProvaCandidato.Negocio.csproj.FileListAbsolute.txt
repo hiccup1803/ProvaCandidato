@@ -1,0 +1,15 @@
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ICI.ProvaCandidato.Negocio.deps.json
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ICI.ProvaCandidato.Negocio.dll
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ref\ICI.ProvaCandidato.Negocio.dll
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ICI.ProvaCandidato.Negocio.pdb
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ICI.ProvaCandidato.Dados.dll
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\bin\Debug\net5.0\ICI.ProvaCandidato.Dados.pdb
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.csproj.AssemblyReference.cache
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.AssemblyInfoInputs.cache
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.AssemblyInfo.cs
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.csproj.CoreCompileInputs.cache
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.csproj.CopyComplete
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.dll
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ref\ICI.ProvaCandidato.Negocio.dll
+C:\Users\paulo\source\repos\ICI.ProvaCandidato\ICI.ProvaCandidato.Negocio\obj\Debug\net5.0\ICI.ProvaCandidato.Negocio.pdb
