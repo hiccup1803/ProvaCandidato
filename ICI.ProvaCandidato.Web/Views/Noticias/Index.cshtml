@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UsuarioFk)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoticiasTags)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UsuarioFk.Nome)
             </td>
+                <td>
+                    @if (item.NoticiasTags != null)
+                    {
+                        @String.Join(", ", item.NoticiasTags.Select(t => t.Id))
+                    }
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |

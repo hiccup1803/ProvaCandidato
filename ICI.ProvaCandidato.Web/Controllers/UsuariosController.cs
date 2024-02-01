@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ICI.ProvaCandidato.Dados;
 using ICI.ProvaCandidato.Dados.Models;
+using ICI.ProvaCandidato.Negocio.Services;
 
 namespace ICI.ProvaCandidato.Web.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UsuarioServico _usuariosServico;
 
         public UsuariosController(ApplicationDbContext context)
         {
             _context = context;
+            _usuariosServico = new UsuarioServico(_context);
         }
 
         // GET: Usuarios
@@ -33,8 +36,8 @@ namespace ICI.ProvaCandidato.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var usuario = await _usuariosServico.PesquisarUsuario(id);
+
             if (usuario == null)
             {
                 return NotFound();
@@ -58,8 +61,7 @@ namespace ICI.ProvaCandidato.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
+                await _usuariosServico.AddUsuario(usuario);
                 return RedirectToAction(nameof(Index));
             }
             return View(usuario);
@@ -73,7 +75,7 @@ namespace ICI.ProvaCandidato.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _usuariosServico.PesquisarUsuario(id);
             if (usuario == null)
             {
                 return NotFound();
@@ -97,12 +99,11 @@ namespace ICI.ProvaCandidato.Web.Controllers
             {
                 try
                 {
-                    _context.Update(usuario);
-                    await _context.SaveChangesAsync();
+                    await _usuariosServico.EditUsuario(usuario);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.Id))
+                    if (!_usuariosServico.UsuarioExists(usuario.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +125,8 @@ namespace ICI.ProvaCandidato.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var usuario = await _usuariosServico.PesquisarUsuario(id);
+
             if (usuario == null)
             {
                 return NotFound();
@@ -139,15 +140,9 @@ namespace ICI.ProvaCandidato.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            _context.Usuarios.Remove(usuario);
-            await _context.SaveChangesAsync();
+            await _usuariosServico.PesquisarUsuarioAsync(id);
+            await _usuariosServico.DeletarUsuario(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool UsuarioExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.Id == id);
         }
     }
 }

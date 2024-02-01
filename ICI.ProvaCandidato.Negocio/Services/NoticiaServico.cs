@@ -22,7 +22,7 @@ namespace ICI.ProvaCandidato.Negocio.Services
         {
             if (noticia == null || noticia.Id < 1) throw new Exception("Noticia não encontrada");
 
-            var tagDb = await _context.Tags.Where(t => t.Descricao.ToLower() == tag.Trim().ToLower()).FirstOrDefaultAsync();            
+            var tagDb = await _context.Tags.Where(t => t.Id.ToString() == tag).FirstOrDefaultAsync();            
 
             if (tagDb == null) throw new Exception("Tag não encontrada");
 
@@ -77,9 +77,9 @@ namespace ICI.ProvaCandidato.Negocio.Services
 
         public async Task<Noticia> PesquisarNoticia(int? id)
         {
-            var noticia = await _context.Noticias.FindAsync(id);
+            var notocia = await _context.Noticias.FindAsync(id);
 
-            return noticia;
+            return notocia;
         }
 
         public async Task<Noticia> PesquisarDetalhesNoticia(int? id)
@@ -98,6 +98,13 @@ namespace ICI.ProvaCandidato.Negocio.Services
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             return noticia;
+        }
+
+        public async Task DeletarNoticia(int id)
+        {
+            var noticia = await _context.Noticias.FindAsync(id);
+            _context.Noticias.Remove(noticia);
+            await _context.SaveChangesAsync();
         }
     }    
 }

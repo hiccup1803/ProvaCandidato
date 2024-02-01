@@ -1,4 +1,5 @@
 ﻿using ICI.ProvaCandidato.Dados;
+using ICI.ProvaCandidato.Dados.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,12 @@ namespace ICI.ProvaCandidato.Negocio.Services
             _context = context;            
         }
 
-        public async Task PesquisarNoticiaTagAsync(int idTag)
+        public async Task<string> PesquisarNoticiaTagAsync(int idTag)
         {
             var noticiaTagDb = await _context.NoticiasTags.Where(t => t.TagId == idTag).FirstOrDefaultAsync();
 
-            if (noticiaTagDb != null) throw new Exception("A Tag não pode ser excluida, pois tem um vinculo com a uma ou mais notícias.");
+            if (noticiaTagDb != null) return ("A Tag não pode ser excluída, pois ela foi usada na Noticia" + noticiaTagDb.Id);
+            else return null;
         }
     }
 }

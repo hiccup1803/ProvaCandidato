@@ -14,15 +14,19 @@ namespace ICI.ProvaCandidato.Web.Controllers
     public class TagsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly TagServico _tagServico;
 
         public TagsController(ApplicationDbContext context)
         {
             _context = context;
+            _tagServico = new TagServico(_context);
         }
 
         // GET: Tags
         public async Task<IActionResult> Index(string searchString = "")
         {
+            string errorMessage = TempData["ErrorMessage"] as string;
+            ViewBag.ErrorMessage = errorMessage;
             var tags = await _context.Tags.Where(t => string.IsNullOrEmpty(searchString) || t.Descricao.Contains(searchString)).ToListAsync();
             return View(tags);          
         }
@@ -35,8 +39,8 @@ namespace ICI.ProvaCandidato.Web.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tag = await _tagServico.PesquisarTag(id);
+
             if (tag == null)
             {
                 return NotFound();
@@ -60,8 +64,7 @@ namespace ICI.ProvaCandidato.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tag);
-                await _context.SaveChangesAsync();
+                await _tagServico.AddTag(tag);
                 return RedirectToAction(nameof(Index));
             }
             return View(tag);
@@ -75,7 +78,8 @@ namespace ICI.ProvaCandidato.Web.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags.FindAsync(id);
+            var tag = await _tagServico.PesquisarTag(id);
+
             if (tag == null)
             {
                 return NotFound();
@@ -99,12 +103,11 @@ namespace ICI.ProvaCandidato.Web.Controllers
             {
                 try
                 {
-                    _context.Update(tag);
-                    await _context.SaveChangesAsync();
+                    await _tagServico.EditTag(tag);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TagExists(tag.Id))
+                    if (!_tagServico.TagExists(tag.Id))
                     {
                         return NotFound();
                     }
@@ -118,16 +121,16 @@ namespace ICI.ProvaCandidato.Web.Controllers
             return View(tag);
         }
 
-        // GET: Tags/Delete/5
+        //GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
-            }            
+            }
 
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tag = await _tagServico.PesquisarTag(id);
+
             if (tag == null)
             {
                 return NotFound();
@@ -141,19 +144,12 @@ namespace ICI.ProvaCandidato.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tagServico = new TagServico(_context);
+            string errormsg = await _tagServico.PesquisarTagAsync(id);
+            if(errormsg == null) await _tagServico.DeletarTag(id); 
+            TempData["ErrorMessage"] = errormsg;
 
-            await tagServico.PesquisarTagAsync(id);
-
-            var tag = await _context.Tags.FindAsync(id);
-            _context.Tags.Remove(tag);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TagExists(int id)
-        {
-            return _context.Tags.Any(e => e.Id == id);
-        }
     }
 }

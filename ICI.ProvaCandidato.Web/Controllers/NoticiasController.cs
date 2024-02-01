@@ -25,8 +25,12 @@ namespace ICI.ProvaCandidato.Web.Controllers
         // GET: Noticias
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Noticias.Include(n => n.UsuarioFk);
-            return View(await applicationDbContext.ToListAsync());
+            var applicationDbContext = _context.Noticias
+              .Include(n => n.UsuarioFk)
+              .Include(n => n.NoticiasTags)
+              .Where(n => n.NoticiasTags.Any());
+            var list = await applicationDbContext.ToListAsync();
+            return View(list);
         }
 
         // GET: Noticias/Details/5
@@ -38,6 +42,10 @@ namespace ICI.ProvaCandidato.Web.Controllers
             }
 
             var noticia = await _noticiaServico.PesquisarDetalhesNoticia(id);
+            var tagsForNoticia = _context.Tags
+                .Where(t => _context.NoticiasTags.Any(nt => nt.TagId == t.Id && nt.NoticiaId == id))
+                .ToList();
+            ViewBag.Tags = new SelectList(tagsForNoticia, "Id", "Descricao");
 
             if (noticia == null)
             {
@@ -61,13 +69,11 @@ namespace ICI.ProvaCandidato.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Text,UsuarioId")] Noticia noticia, string[] tag)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Text,UsuarioId")] Noticia noticia, string[] tags)
         {
             if (ModelState.IsValid)
             {
-                await _noticiaServico.AdicionarNoticiaComTagsAsync(noticia, tag);
-                _context.Add(noticia);
-                await _context.SaveChangesAsync();
+                await _noticiaServico.AdicionarNoticiaComTagsAsync(noticia, tags);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Nome", noticia.UsuarioId);
@@ -81,7 +87,10 @@ namespace ICI.ProvaCandidato.Web.Controllers
             {
                 return NotFound();
             }
-
+            var tagsForNoticia = _context.Tags
+                .Where(t => _context.NoticiasTags.Any(nt => nt.TagId == t.Id && nt.NoticiaId == id))
+                .ToList();
+            ViewBag.Tags = new SelectList(tagsForNoticia, "Id", "Descricao");
             var noticia = await _noticiaServico.PesquisarNoticia(id);
             
             if (noticia == null)

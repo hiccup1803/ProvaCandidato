@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NoticiasTags" class="control-label">Tags</label>
-                <select asp-for="NoticiasTags" class="form-control" asp-items="ViewBag.Tags" multiple></select>
+                <select asp-for="NoticiasTags" name="tags" class="form-control" asp-items="ViewBag.Tags" multiple></select>
                 <span asp-validation-for="NoticiasTags" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -57,6 +57,11 @@
             var titulo = document.getElementById("Titulo").value;
             var text = document.getElementById("Text").value;
             var usuarioId = document.getElementById("UsuarioId").value;
+            var tags = [];
+            
+            for (let i = 0; i < document.getElementById("NoticiasTags").length; i++) {
+                tags.push(document.getElementById("NoticiasTags")[i].value);
+            }
 
             if (titulo === "" || text === "" || usuarioId === "") {
                 alert("Por favor, preencha todos os campos.");
